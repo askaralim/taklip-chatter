@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 
 from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
-from chatterbot.comparisons import levenshtein_distance
+from chatterbot.comparisons import LevenshteinDistance
 from chatterbot.response_selection import get_random_response
 
 import os
@@ -24,7 +24,7 @@ taklip_bot = ChatBot('Taklip Bot',
                      logic_adapters=[
                          {
                              'import_path': 'chatterbot.logic.BestMatch',
-                             'statement_comparison_function': levenshtein_distance,
+                             'statement_comparison_function': LevenshteinDistance,
                              # "statement_comparison_function": SentimentComparison
                              # "statement_comparison_function": SynsetDistance
                              # "statement_comparison_function": JaccardSimilarity,
