@@ -14,6 +14,11 @@ logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 
+default_response = ["这个问题我目前还没有正确的答案",
+                    "hmmm...目前的训练数据还不够丰富，请给我多点时间再学习研究一下",
+                    "sorry 这个问题我没有理解",
+                    "你难倒我了"]
+
 taklip_bot = ChatBot('Taklip Bot',
                      read_only=True,
                      storage_adapter='chatterbot.storage.SQLStorageAdapter',
@@ -29,7 +34,7 @@ taklip_bot = ChatBot('Taklip Bot',
                              # "statement_comparison_function": SynsetDistance
                              # "statement_comparison_function": JaccardSimilarity,
                              'response_selection_method': get_random_response,
-                             'default_response': '正在学习中',
+                             'default_response': default_response,
                              'maximum_similarity_threshold': 0.90
                          }
                      ],
@@ -87,10 +92,11 @@ def train():
     print("Training completed for terms.json")
 
     trainer.train(
-        "chatterbot.corpus.chinese"
+        "chatterbot.corpus.taklip"
     )
 
-    return str("success")
+    # return str("success")
+    return jsonify({'message': 'success'})
 
 
 if __name__ == "__main__":
